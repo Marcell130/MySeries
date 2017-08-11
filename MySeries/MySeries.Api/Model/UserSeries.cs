@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySeries.Api.Model
 {
@@ -7,7 +8,7 @@ namespace MySeries.Api.Model
 		public int Id { get; set; }
 
 		[ForeignKey( "UserId" )]
-		public User User { get; set; }
+		public ApplicationUser User { get; set; }
 
 		public string UserId { get; set; }
 
@@ -15,5 +16,7 @@ namespace MySeries.Api.Model
 		[ForeignKey( "TvShowId" )]
 		public TvShow TvShow { get; set; }
 		public int TvShowId { get; set; }
+
+		public int? Rating { get; set; }
 	}
 }

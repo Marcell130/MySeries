@@ -2,7 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/MySeries/MySeries.Api/Model
 /MySeries/MySeries.Api/bin
 /MySeries/packages
-/MySeries/MySeries.Api/obj/Debug
+/MySeries/MySeries.Api/obj
+/MySeries/MySeries.Api/Web.config
+/MySeries/MySeries.Api/Web.Debug.config
+/MySeries/MySeries.Api/Web.Release.config
+/MySeries/MySeries.Api/Migrations
+/MySeries/MySeriesTodo.txt
