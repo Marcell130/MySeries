@@ -7,6 +7,7 @@ namespace MySeries.Api.Model
 	{
 		public int Id { get; set; }
 		public int TmdbId { get; set; }
+
 		public string Title { get; set; }
 		public string WallpaperUri { get; set; }
 		public string PosterUri { get; set; }

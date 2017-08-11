@@ -3,3 +3,6 @@
 ################################################################################
 
 /MySeries/MySeries.Api/Model
+/MySeries/MySeries.Api/bin
+/MySeries/packages
+/MySeries/MySeries.Api/obj/Debug
