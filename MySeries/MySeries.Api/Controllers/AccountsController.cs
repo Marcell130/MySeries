@@ -24,8 +24,8 @@ namespace MySeries.Api.Controllers
 		private ApplicationUserManager UserManager => _appUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
 		private readonly UnitOfWork unitOfWork = new UnitOfWork();
-
 		
+
 		[Route( "users" )]
 		public async Task<IHttpActionResult> GetUsers()
 		{

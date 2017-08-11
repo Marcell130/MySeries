@@ -18,5 +18,6 @@ namespace MySeries.Api.Model
 		public int TvShowId { get; set; }
 
 		public int? Rating { get; set; }
+		public DateTime AddedDate { get; set; }
 	}
 }

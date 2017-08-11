@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -39,9 +40,9 @@ namespace MySeries.Api.EF
 			}
 		}
 
-		public void Save()
+		public async Task SaveChangesAsync()
 		{
-			context.SaveChanges();
+			await context.SaveChangesAsync();
 		}
 
 		private bool disposed;

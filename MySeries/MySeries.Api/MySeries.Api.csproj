@@ -235,6 +235,8 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Dto\TvShowDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="EF\MySeriesDbContext.cs" />
     <Compile Include="EF\UnitOfWork.cs" />
