@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MySeries.Api.Dto;
 using MySeries.Api.EF;
+using MySeries.Api.GlobalHandlers;
 using MySeries.Api.Identity;
 using MySeries.Api.Identity.Model;
 using MySeries.Api.Model;
@@ -49,8 +50,7 @@ namespace MySeries.Api.Repositories
 		{
 			if( await this.context.UserTvShows.AnyAsync( uts => uts.UserId == userId && uts.TvShowId == tvShowId ) )
 			{
-				//TODO public exception
-				throw new Exception( "Series already added" );
+				throw new BusinessLogicException( "Series already added" );
 			}
 
 			var userTvShow = new UserTvShow
@@ -69,8 +69,7 @@ namespace MySeries.Api.Repositories
 
 			if( userTvShow == null )
 			{
-				//TODO public exception
-				throw new Exception( "Series already removed" );
+				throw new BusinessLogicException( "Series already removed" );
 			}
 
 			this.context.UserTvShows.Remove( userTvShow );
