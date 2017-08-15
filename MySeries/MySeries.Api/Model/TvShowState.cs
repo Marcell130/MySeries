@@ -2,9 +2,9 @@
 {
 	public enum TvShowState
 	{
-		AtSeasonEnd,
-		TvShowEnded,
+	    NoInfo = 0,
 		OnGoing,
-		NoInfo
+        AtSeasonEnd,
+		TvShowEnded,
 	}
 }

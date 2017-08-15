@@ -10,3 +10,6 @@
 /MySeries/MySeries.Api/Web.Release.config
 /MySeries/MySeries.Api/Migrations
 /MySeries/MySeriesTodo.txt
+*.xcf
+/MySeries/MySeries.UniversalClient/bin/x86/Debug
+/MySeries/MySeries.UniversalClient/obj

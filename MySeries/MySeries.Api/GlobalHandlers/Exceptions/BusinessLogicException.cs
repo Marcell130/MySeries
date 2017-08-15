@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace MySeries.Api.GlobalHandlers
+namespace MySeries.Api.GlobalHandlers.Exceptions
 {
     public class BusinessLogicException : Exception
     {

@@ -169,6 +169,9 @@
     <Reference Include="Thinktecture.IdentityModel.Core, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.3.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -176,29 +179,6 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.ApplicationInsights">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.Agent.Intercept">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.DependencyCollector">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.PerfCounterCollector">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.WindowsServer">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.Web">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -237,19 +217,24 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\SeasonsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TvShowsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Dto\EpisodeDto.cs" />
+    <Compile Include="Dto\SeasonDto.cs" />
     <Compile Include="Dto\TvShowDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="EF\MySeriesDbContext.cs" />
     <Compile Include="EF\UnitOfWork.cs" />
-    <Compile Include="GlobalHandlers\BusinessLogicException.cs" />
-    <Compile Include="GlobalHandlers\EntityNotFoundException.cs" />
+    <Compile Include="GlobalHandlers\Exceptions\BusinessLogicException.cs" />
+    <Compile Include="GlobalHandlers\Exceptions\EntityNotFoundException.cs" />
     <Compile Include="GlobalHandlers\ErrorResult.cs" />
     <Compile Include="GlobalHandlers\Logging\ExceptionLogger.cs" />
+    <Compile Include="GlobalHandlers\Logging\ExceptionExtension.cs" />
     <Compile Include="GlobalHandlers\Logging\RequestLogger.cs" />
     <Compile Include="GlobalHandlers\Logging\TraceExtension.cs" />
-    <Compile Include="GlobalHandlers\SurveyAdminExceptionHandler.cs" />
+    <Compile Include="GlobalHandlers\ApplicationExceptionHandler.cs" />
     <Compile Include="GlobalHandlers\ValidationActionFilter.cs" />
     <Compile Include="Identity\ApplicationUserManger.cs" />
     <Compile Include="Identity\Model\ChangePasswordBindingModel.cs" />
@@ -258,9 +243,17 @@
     <Compile Include="Identity\Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Identity\Validators\MyCustomPasswordValidator.cs" />
     <Compile Include="Identity\Validators\MyCustomUserValidator.cs" />
-    <Compile Include="Migrations\201708111349030_Init.cs" />
-    <Compile Include="Migrations\201708111349030_Init.Designer.cs">
-      <DependentUpon>201708111349030_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201708151728053_InitialCreate.cs" />
+    <Compile Include="Migrations\201708151728053_InitialCreate.Designer.cs">
+      <DependentUpon>201708151728053_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708151741306_EpisodePosterUri.cs" />
+    <Compile Include="Migrations\201708151741306_EpisodePosterUri.Designer.cs">
+      <DependentUpon>201708151741306_EpisodePosterUri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708152042460_ForeignIds.cs" />
+    <Compile Include="Migrations\201708152042460_ForeignIds.Designer.cs">
+      <DependentUpon>201708152042460_ForeignIds.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Episode.cs" />
@@ -271,6 +264,7 @@
     <Compile Include="Model\UserSeries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
+    <Compile Include="Repositories\EpisodeRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Services\EmailService.cs" />
   </ItemGroup>
@@ -304,6 +298,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\MySeriesApi - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\MySeriesApi - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -351,8 +347,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708111349030_Init.resx">
-      <DependentUpon>201708111349030_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708151728053_InitialCreate.resx">
+      <DependentUpon>201708151728053_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708151741306_EpisodePosterUri.resx">
+      <DependentUpon>201708151741306_EpisodePosterUri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708152042460_ForeignIds.resx">
+      <DependentUpon>201708152042460_ForeignIds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

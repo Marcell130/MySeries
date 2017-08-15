@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
-using MySeries.Api.Dto;
 using MySeries.Api.EF;
 
 namespace MySeries.Api.Controllers
@@ -58,15 +53,6 @@ namespace MySeries.Api.Controllers
 			return Ok();
 		}
 
-		[HttpPost]
-		[Route( "TvShows/{tvShowId}/Rate" )]
-		public async Task<IHttpActionResult> AddTvShowRating( [FromUri] int tvShowId, [FromBody] int? rating )
-		{
-			var userId = User.Identity.GetUserId();
-			await this.unitOfWork.AccountRepository.AddRatingForUserTvShow( userId, tvShowId, rating );
-			await this.unitOfWork.SaveChangesAsync();
-
-			return Ok();
-		}
+		
 	}
 }

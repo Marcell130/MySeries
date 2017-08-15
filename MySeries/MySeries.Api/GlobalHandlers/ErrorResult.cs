@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using MySeries.Api.GlobalHandlers.Exceptions;
+using MySeries.Api.GlobalHandlers.Logging;
 
 namespace MySeries.Api.GlobalHandlers
 {
@@ -16,20 +18,23 @@ namespace MySeries.Api.GlobalHandlers
         private readonly HttpRequestMessage request;
 
 
-        public ErrorResult(Exception exception, HttpRequestMessage request)
+        public ErrorResult( Exception exception, HttpRequestMessage request )
         {
             this.exception = exception;
             this.request = request;
         }
 
-        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<HttpResponseMessage> ExecuteAsync( CancellationToken cancellationToken )
         {
-            return Task.FromResult(Execute());
+            return Task.FromResult( Execute() );
         }
 
         private HttpResponseMessage Execute()
         {
             HttpResponseMessage response;
+#if DEBUG
+            response = this.request.CreateErrorResponse( HttpStatusCode.InternalServerError, this.exception.GetExceptionString() );
+#else
             if (this.exception is BusinessLogicException)
             {
                 var logicException = this.exception as BusinessLogicException;
@@ -50,7 +55,9 @@ namespace MySeries.Api.GlobalHandlers
             else
             {
                 response = this.request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unknown error occured");
+                response = this.request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unknown error occured");
             }
+#endif
 
             return response;
         }

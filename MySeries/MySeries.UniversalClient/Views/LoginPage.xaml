@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="MySeries.UniversalClient.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}"
+    mc:Ignorable="d"
+    >
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Bottom"
+               Source="../Assets/logo.png"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0, 20, 0, 0">
+
+            <!--UserName-->
+            <TextBlock Text="Email" Foreground="Black" FontSize="25"/>
+            <TextBox  Margin="0,10,0,30" Text="{Binding Username, Mode=TwoWay}"/>
+
+            <!--Password-->
+            <TextBlock Text="Password" Foreground="Black" FontSize="25"/>
+            <PasswordBox Margin="0,10,0,30" Password="{Binding Password, Mode=TwoWay}"  />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Login Button-->
+                <Button Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        MinWidth="200"
+                        Content="Login" 
+                        Command="{x:Bind ViewModel.LoginCommand}" />
+
+                <!--  Registration Button-->
+                <Button Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        MinWidth="200"
+                        Content="Sign Up"
+                        Command="{x:Bind ViewModel.SignupCommand}" />
+            </Grid>
+
+        </StackPanel>
+    </Grid>
+</Page>

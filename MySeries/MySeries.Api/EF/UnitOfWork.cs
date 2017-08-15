@@ -9,60 +9,40 @@ using MySeries.Api.Repositories;
 
 namespace MySeries.Api.EF
 {
-	public class UnitOfWork : IDisposable
-	{
-		private readonly MySeriesDbContext context = new MySeriesDbContext();
+    public class UnitOfWork : IDisposable
+    {
+        private readonly MySeriesDbContext context = new MySeriesDbContext();
 
-		private AccountRepository accountRepository;
-		private GenericRepository<TvShow> tvShowRepository;
-		
-		public AccountRepository AccountRepository
-		{
-			get
-			{
-				if( this.accountRepository == null )
-				{
-					this.accountRepository = new AccountRepository( context );
-				}
-				return accountRepository;
-			}
-		}
+        private AccountRepository accountRepository;
+        private SeasonRepository seasonRepository;
 
-		public GenericRepository<TvShow> TvShowRepository
-		{
-			get
-			{
-				if( this.tvShowRepository == null )
-				{
-					this.tvShowRepository = new GenericRepository<TvShow>( context );
-				}
-				return tvShowRepository;
-			}
-		}
+        public AccountRepository AccountRepository => accountRepository ?? (this.accountRepository = new AccountRepository( this.context ));
+        public SeasonRepository SeasonRepository => seasonRepository ?? (this.seasonRepository = new SeasonRepository( this.context ));
 
-		public async Task SaveChangesAsync()
-		{
-			await context.SaveChangesAsync();
-		}
 
-		private bool disposed;
+        public async Task SaveChangesAsync()
+        {
+            await context.SaveChangesAsync();
+        }
 
-		protected virtual void Dispose( bool disposing )
-		{
-			if( !this.disposed )
-			{
-				if( disposing )
-				{
-					context.Dispose();
-				}
-			}
-			this.disposed = true;
-		}
+        private bool disposed;
 
-		public void Dispose()
-		{
-			Dispose( true );
-			GC.SuppressFinalize( this );
-		}
-	}
+        protected virtual void Dispose( bool disposing )
+        {
+            if( !this.disposed )
+            {
+                if( disposing )
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MySeries.Api.GlobalHandlers
+namespace MySeries.Api.GlobalHandlers.Exceptions
 {
     [Serializable]
     public class EntityNotFoundException : Exception

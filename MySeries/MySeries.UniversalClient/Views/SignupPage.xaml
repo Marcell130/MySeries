@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="MySeries.UniversalClient.Views.SignupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MySeries.UniversalClient.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding SignupModelView, Source={StaticResource Locator}}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <!--Title-->
+        <TextBlock Text="User Registration" Grid.Row="0" FontSize="40"  Foreground="Black"/>
+
+        <!--FirstName-->
+        <TextBlock Text="Email: " Grid.Row="1" Margin="0,25,0,0" Foreground="Black" />
+        <TextBox BorderBrush="LightGray" Grid.Row="1" Margin="100,0,0,0" DataContext="{Binding SignupBindingModel}" Text="{Binding FirstName, Mode=TwoWay}" />
+        <!--LastName-->
+        <TextBlock Text="Email: " Grid.Row="2" Margin="0,25,0,0" Foreground="Black" />
+        <TextBox  BorderBrush="LightGray" Grid.Row="2" Margin="100,0,0,0" DataContext="{Binding SignupBindingModel}" Text="{Binding LastName, Mode=TwoWay}" />
+
+        <!--Email-->
+        <TextBlock Text="Email: " Grid.Row="3" Margin="0,25,0,0" Foreground="Black" />
+        <TextBox  BorderBrush="LightGray" Grid.Row="3" Margin="100,0,0,0" DataContext="{Binding SignupBindingModel}" Text="{Binding Email, Mode=TwoWay}"/>
+
+        <!--Password-->
+        <TextBlock Text="Password: " Grid.Row="4" Margin="0,25,0,0" Foreground="Black" />
+        <PasswordBox  BorderBrush="LightGray" Grid.Row="4" Margin="100,0,0,0"  DataContext="{Binding SignupBindingModel}" Password="{Binding Password, Mode=TwoWay}"/>
+
+        <!--ConfirmPassword-->
+        <TextBlock Text="Confirm Password: " Grid.Row="5" Margin="0,25,0,0" Foreground="Black" />
+        <PasswordBox  BorderBrush="LightGray" Grid.Row="5" Margin="100,0,0,0" DataContext="{Binding SignupBindingModel}" Password="{Binding ConfirmPassword, Mode=TwoWay}"  />
+
+        <!--BirthDate-->
+        <DatePicker Grid.Row="6" Header="Date of birth"  DataContext="{Binding SignupBindingModel}" Date="{Binding BirthDate, Mode=TwoWay}"/>
+
+        <!--Gender-->
+        <!--TODO bind to model-->
+        <TextBlock Text="Gender: " Grid.Row="7" Margin="0,25,0,0" Foreground="Black" />
+        <RadioButton Name="GenMale" Background="LightGray" Content="Male" Grid.Row="7" Margin="100,0,0,0" Foreground="Black" />
+        <RadioButton Name="GenFeMale"  Background="LightGray" Content="Female" Grid.Row="7" Margin="200,0,0,0" Foreground="Black" />
+
+        <!--Cancel Button-->
+        <Button BorderBrush="Transparent" Content="Submit" Command="{x:Bind ViewModel.CancelCommand}" MinWidth="100" Grid.Row="8" Margin="150,0,0,0"/>
+        <!--Submit Button-->
+        <Button BorderBrush="Transparent" Content="Submit" Command="{x:Bind ViewModel.SignupCommand}" MinWidth="100" Grid.Row="8" Margin="300,0,0,0"/>
+
+    </Grid>
+</Page>

@@ -28,8 +28,8 @@ namespace MySeries.Api
 
 			GlobalConfiguration.Configuration.Formatters.JsonFormatter.S‌​erializerSettings.Re‌​ferenceLoopHandling = ReferenceLoopHandling.Ignore;
 			GlobalConfiguration.Configuration.Filters.Add( new ValidationActionFilter() );
-			config.Services.Replace( typeof( IExceptionHandler ), new SurveyAdminExceptionHandler() );
-			config.Services.Add( typeof( IExceptionLogger ), new SurveyAdminExceptionLogger() );
+			config.Services.Replace( typeof( IExceptionHandler ), new ApplicationExceptionHandler() );
+			//config.Services.Add( typeof( IExceptionLogger ), new SurveyAdminExceptionLogger() );
 			config.MessageHandlers.Add( new RequestLogger() );
 		}
 	}

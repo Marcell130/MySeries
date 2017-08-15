@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -16,7 +14,7 @@ using MySeries.Api.Model;
 namespace MySeries.Api.Controllers
 {
 	[Authorize]
-	[RoutePrefix( "api/accounts" )]
+	[RoutePrefix( "api/Accounts" )]
 	public class AccountsController : ApiController
 	{
 		private readonly ApplicationUserManager _appUserManager = null;
@@ -26,7 +24,7 @@ namespace MySeries.Api.Controllers
 		private readonly UnitOfWork unitOfWork = new UnitOfWork();
 		
 
-		[Route( "users" )]
+		[Route( "Users" )]
 		public async Task<IHttpActionResult> GetUsers()
 		{
 			var users = (await this.unitOfWork.AccountRepository.GetUsers()).Select( u => u.ToDto() ).ToList();
@@ -34,7 +32,7 @@ namespace MySeries.Api.Controllers
 		}
 
 		[AllowAnonymous]
-		[Route( "create" )]
+		[Route( "Create" )]
 		public async Task<IHttpActionResult> CreateUser( CreateUserBindingModel userModel )
 		{
 				if (!ModelState.IsValid)
@@ -80,7 +78,7 @@ namespace MySeries.Api.Controllers
 			}
 		}
 
-		[Route( "user/{id:guid}", Name = "GetUserById" )]
+		[Route( "User/{id:guid}", Name = "GetUserById" )]
 		public async Task<IHttpActionResult> GetUser( string Id )
 		{
 			var user = await UserManager.FindByIdAsync( Id );
@@ -93,7 +91,7 @@ namespace MySeries.Api.Controllers
 			return NotFound();
 		}
 
-		[Route( "user/{username}" )]
+		[Route( "User/{username}" )]
 		public async Task<IHttpActionResult> GetUserByName( string username )
 		{
 			var user = await UserManager.FindByNameAsync( username );
