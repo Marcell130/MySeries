@@ -1,33 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,log4net" />
     <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
   </configSections>
   <appSettings>
-    <add key="SendGridApiKey" value=""/><!--ADD KEY-->
-
+    <add key="SendGridApiKey" value="" />
     <add key="LuisBaseAddress" value="https://westeurope.api.cognitive.microsoft.com/luis/v2.0/apps/" />
-    <add key="LuisAppId" value="" /><!--ADD LUIS APP ID-->
-    <add key="LuisApiKey" value="" /><!--ADD KEY-->
-
+    <add key="LuisAppId" value="" />
+    <add key="LuisApiKey" value="" />
     <add key="webpages:Version" value="3.0.0.0" />
     <add key="webpages:Enabled" value="false" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
   </appSettings>
-  
-  
   <connectionStrings>
-    <add name="MySeriesDbConnection" connectionString="" providerName="System.Data.SqlClient" /><!--ADD CONNECTION STRING-->
+    <!--Enter Credentials-->
+    <add name="MySeriesDbContext" connectionString="Server=tcp:myseriesdb.database.windows.net,1433;Initial Catalog=MySeriesDb;Persist Security Info=False;User ID=;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" providerName="System.Data.SqlClient" />
   </connectionStrings>
-
   <system.web>
+    <!--<authentication mode="Windows" />-->
+    <customErrors mode="Off" />
     <compilation debug="true" targetFramework="4.5.2" />
     <httpRuntime targetFramework="4.5.2" />
-    <httpModules>
-      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" />
-    </httpModules>
+    <httpModules></httpModules>
   </system.web>
+  <log4net>
+    <appender name="FileAppender" type="log4net.Appender.FileAppender">
+      <file value="MySeriesApi.log" />
+      <appendToFile value="true" />
+      <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%utcdate [%-3thread] %-5level - %message (%logger)%newline" />
+      </layout>
+    </appender>
+    <root>
+      <level value="DEBUG" />
+      <appender-ref ref="FileAppender" />
+    </root>
+  </log4net>
   <system.webServer>
     <handlers>
       <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
@@ -36,16 +47,13 @@
       <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
     </handlers>
     <validation validateIntegratedModeConfiguration="false" />
-    <modules>
-      <remove name="ApplicationInsightsWebTracking" />
-      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" preCondition="managedHandler" />
-    </modules>
+    <modules></modules>
   </system.webServer>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
         <assemblyIdentity name="Newtonsoft.Json" culture="neutral" publicKeyToken="30ad4fe6b2a6aeed" />
-        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
+        <bindingRedirect oldVersion="0.0.0.0-10.0.0.0" newVersion="10.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35" />
@@ -86,6 +94,10 @@
       <dependentAssembly>
         <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Http.WebHost" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
       </dependentAssembly>
     </assemblyBinding>
   </runtime>

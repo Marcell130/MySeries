@@ -8,7 +8,6 @@
 /MySeries/MySeries.Api/Web.config
 /MySeries/MySeries.Api/Web.Debug.config
 /MySeries/MySeries.Api/Web.Release.config
-/MySeries/MySeries.Api/Migrations
 /MySeries/MySeriesTodo.txt
 *.xcf
 /MySeries/MySeries.UniversalClient/bin/x86/Debug
@@ -24,3 +23,6 @@
 /MySeries/MySeries.DbUpdateService/bin
 /MySeries/MySeries.DbUpdateService/obj
 /MySeries/MySeries.DbUpdateService/App.config
+/.vs
+/MySeries/.vs/MySeries/v15/sqlite3
+/MySeriesTodo.txt

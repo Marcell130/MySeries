@@ -95,10 +95,8 @@
     <Compile Include="Tmdb\TmdbService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="App.config.GitExample" />
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\MySeriesDatabaseUpdater - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\MySeriesDatabaseUpdater - Web Deploy.pubxml" />
