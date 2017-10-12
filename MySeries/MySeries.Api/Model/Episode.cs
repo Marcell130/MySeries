@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,6 +28,8 @@ namespace MySeries.Api.Model
         [ForeignKey( "SeasonId" )]
         public Season Season { get; set; }
         public int SeasonId { get; set; }
+
+        public List<EpisodeComment> Comments { get; set; }
 
         //public float VoteAverage { get; set; }
         //public int VoteCount { get; set; }

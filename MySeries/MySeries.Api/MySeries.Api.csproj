@@ -233,6 +233,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TvShowsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Dto\EpisodeCommentDto.cs" />
     <Compile Include="Dto\EpisodeDto.cs" />
     <Compile Include="Dto\RoleDto.cs" />
     <Compile Include="Dto\SeasonDto.cs" />
@@ -257,7 +258,21 @@
     <Compile Include="Identity\Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Identity\Validators\MyCustomPasswordValidator.cs" />
     <Compile Include="Identity\Validators\MyCustomUserValidator.cs" />
+    <Compile Include="Migrations\201710121924170_InitialCreate.cs" />
+    <Compile Include="Migrations\201710121924170_InitialCreate.Designer.cs">
+      <DependentUpon>201710121924170_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710121941591_EpisodeComments.cs" />
+    <Compile Include="Migrations\201710121941591_EpisodeComments.Designer.cs">
+      <DependentUpon>201710121941591_EpisodeComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710121946548_EpisodeCommentsMaxLength.cs" />
+    <Compile Include="Migrations\201710121946548_EpisodeCommentsMaxLength.Designer.cs">
+      <DependentUpon>201710121946548_EpisodeCommentsMaxLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Episode.cs" />
+    <Compile Include="Model\EpisodeComment.cs" />
     <Compile Include="Model\Genre.cs" />
     <Compile Include="Model\Season.cs" />
     <Compile Include="Model\TvShow.cs" />
@@ -335,7 +350,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -354,6 +368,17 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710121924170_InitialCreate.resx">
+      <DependentUpon>201710121924170_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710121941591_EpisodeComments.resx">
+      <DependentUpon>201710121941591_EpisodeComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710121946548_EpisodeCommentsMaxLength.resx">
+      <DependentUpon>201710121946548_EpisodeCommentsMaxLength.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -29,6 +29,8 @@ namespace MySeries.Api.Dto
 
         public string SeriesPosterUriPostfix { get; set; }
         public string EpisodeWallpaperUriPostfix { set; get; }
+
+        public List<EpisodeCommentDto> Comments { get; set; }
     }
 
     public static class EpisodeExtension
@@ -56,7 +58,8 @@ namespace MySeries.Api.Dto
                 EpisodeNumber = episode.EpisodeNumber,
                 SeriesTitle = episode.Season?.TvShow?.Title,
                 AirDate = episode.AirDate,
-                Overview = episode.Overview
+                Overview = episode.Overview,
+                Comments = episode.Comments?.Select( c => c.ToDto() ).ToList()
             };
             return episodeDto;
         }

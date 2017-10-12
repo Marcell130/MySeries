@@ -22,16 +22,18 @@ namespace MySeries.Api.Repositories
             this.context = context;
         }
 
-        public Episode GetEpisode( object id )
+        public async Task<EpisodeDetailedDto> GetEpisode( int episodeId )
         {
-            var episode = this.context.Episodes.Find( id );
+            var episode = await this.context.Episodes/*.Include( e => e.Comments )*/
+                                                     .Include( e => e.Comments.Select( c => c.User ) )
+                                                     .SingleOrDefaultAsync( e => e.TmdbId == episodeId );
 
             if (episode == null)
             {
-                throw new EntityNotFoundException( JsonConvert.SerializeObject( id ) );
+                throw new EntityNotFoundException( episodeId );
             }
-            
-            return episode;
+
+            return episode.ToDetailedDto();
         }
 
         public async Task<EpisodeDto> GetNextEpisode( TvShow tvShow )
@@ -57,5 +59,19 @@ namespace MySeries.Api.Repositories
                 this.context.Episodes.Add( entity );
             }
         }
+
+        public void AddComment( string userId, int episodeId, string text )
+        {
+            var comment = new EpisodeComment
+            {
+                UserId = userId,
+                EpisodeId = episodeId,
+                Text = text,
+                Timestamp = DateTime.Now
+            };
+
+            this.context.EpisodeComments.Add( comment );
+        }
+
     }
 }
