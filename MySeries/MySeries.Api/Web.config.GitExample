@@ -5,8 +5,11 @@
   </configSections>
   <appSettings>
     <add key="SendGridApiKey" value=""/><!--ADD KEY-->
-    
-    
+
+    <add key="LuisBaseAddress" value="https://westeurope.api.cognitive.microsoft.com/luis/v2.0/apps/" />
+    <add key="LuisAppId" value="" /><!--ADD LUIS APP ID-->
+    <add key="LuisApiKey" value="" /><!--ADD KEY-->
+
     <add key="webpages:Version" value="3.0.0.0" />
     <add key="webpages:Enabled" value="false" />
     <add key="ClientValidationEnabled" value="true" />
@@ -15,8 +18,7 @@
   
   
   <connectionStrings>
-    <!--CONNECTION STRING NEEDED-->
-    <add name="MySeriesDbConnection" connectionString="" providerName="System.Data.SqlClient" />
+    <add name="MySeriesDbConnection" connectionString="" providerName="System.Data.SqlClient" /><!--ADD CONNECTION STRING-->
   </connectionStrings>
 
   <system.web>

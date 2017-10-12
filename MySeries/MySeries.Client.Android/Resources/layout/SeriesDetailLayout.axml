@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top">
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+      <MvxImageView
+          android:id="@+id/image"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:scaleType="fitCenter"
+          android:adjustViewBounds="true"
+          local:MvxBind="ImageUrl Series.WallpaperUriLarge" />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:textSize="25sp"
+            local:MvxBind="Text Series.Title" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginRight="5dp"
+            local:MvxBind="Text Series.FirstAirYear" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:textSize="15sp"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:text="+"
+            local:MvxBind="Click AddSeriesCommand" />
+      </LinearLayout>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="5dp"
+          android:layout_marginTop="25dp"
+          local:MvxBind="Text Series.Overview" />
+
+      <MvvmCross.Droid.Support.V7.RecyclerView.MvxRecyclerView
+          android:id="@+id/series_list"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="25dp"
+          android:layout_marginBottom="25dp"
+          android:scrollbars="horizontal"
+          local:MvxItemTemplate="@layout/listitem_seasonlayout"
+          local:MvxBind="ItemsSource Series.Seasons; ItemClick SeasonClickCommand" />
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

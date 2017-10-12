@@ -15,25 +15,31 @@ namespace MySeries.Api.EF
 
         private AccountRepository accountRepository;
         private SeasonRepository seasonRepository;
+        private TvShowRepository tvShowRepository;
+        private EpisodeRepository episodeRepository;
+        private GenreRepository genreRepository;
 
-        public AccountRepository AccountRepository => accountRepository ?? (this.accountRepository = new AccountRepository( this.context ));
-        public SeasonRepository SeasonRepository => seasonRepository ?? (this.seasonRepository = new SeasonRepository( this.context ));
+        public AccountRepository AccountRepository => this.accountRepository ?? (this.accountRepository = new AccountRepository( this.context ));
+        public SeasonRepository SeasonRepository => this.seasonRepository ?? (this.seasonRepository = new SeasonRepository( this.context ));
+        public TvShowRepository TvShowRepository => this.tvShowRepository ?? (this.tvShowRepository = new TvShowRepository( this.context ));
+        public EpisodeRepository EpisodeRepository => this.episodeRepository ?? (this.episodeRepository = new EpisodeRepository( this.context ));
+        public GenreRepository GenreRepository => this.genreRepository ?? (this.genreRepository = new GenreRepository( this.context ));
 
 
         public async Task SaveChangesAsync()
         {
-            await context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
         }
 
         private bool disposed;
 
         protected virtual void Dispose( bool disposing )
         {
-            if( !this.disposed )
+            if (!this.disposed)
             {
-                if( disposing )
+                if (disposing)
                 {
-                    context.Dispose();
+                    this.context.Dispose();
                 }
             }
             this.disposed = true;

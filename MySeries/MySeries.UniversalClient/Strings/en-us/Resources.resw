@@ -126,7 +126,7 @@
   <data name="MasterDetailPage_Title.Text" xml:space="preserve">
     <value>MasterDetail</value>
   </data>
-  <data name="Tabbed_Pivot.Text" xml:space="preserve">  
+  <!--<data name="Tabbed_Pivot.Text" xml:space="preserve">  
     <value>Tabbed</value>
   </data>
   <data name="Tabbed_PivotItem1.Header" xml:space="preserve">  
@@ -134,7 +134,7 @@
   </data>
   <data name="Tabbed_PivotItem2.Header" xml:space="preserve">
     <value>Item 2</value>
-  </data>
+  </data>-->
   <data name="Settings_Title.Text" xml:space="preserve">
     <value>Settings</value>
   </data>

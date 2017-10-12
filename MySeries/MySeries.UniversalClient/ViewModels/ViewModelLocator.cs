@@ -19,12 +19,13 @@ namespace MySeries.UniversalClient.ViewModels
             SimpleIoc.Default.Register<ShellViewModel>();
             Register<LoginViewModel, LoginPage>();
             Register<SignupViewModel, SignupPage>();
+            Register<CalendarViewModel, CalendarPage>();
             //Register<MainViewModel, MainPage>();
             Register<MySeriesViewModel, MySeriesPage>();
             Register<SeriesDetailViewModel, SeriesDetailPage>();
             Register<MasterDetailViewModel, MasterDetailPage>();
             Register<MasterDetailDetailViewModel, MasterDetailDetailPage>();
-            //Register<TabbedViewModel, TabbedPage>();
+            Register<SeriesListViewModel, SeriesListPage>();
             Register<SettingsViewModel, SettingsPage>();
         }
 
@@ -32,8 +33,9 @@ namespace MySeries.UniversalClient.ViewModels
         public SignupViewModel SignupViewModel => ServiceLocator.Current.GetInstance<SignupViewModel>();
 
         public SettingsViewModel SettingsViewModel => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+        public CalendarViewModel CalendarViewModel => ServiceLocator.Current.GetInstance<CalendarViewModel>();
 
-        //public TabbedViewModel TabbedViewModel => ServiceLocator.Current.GetInstance<TabbedViewModel>();
+        public SeriesListViewModel SeriesListViewModel => ServiceLocator.Current.GetInstance<SeriesListViewModel>();
 
         public MasterDetailDetailViewModel MasterDetailDetailViewModel => ServiceLocator.Current.GetInstance<MasterDetailDetailViewModel>();
 

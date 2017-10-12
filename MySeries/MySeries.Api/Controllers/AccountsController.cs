@@ -7,20 +7,17 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using MySeries.Api.Dto;
 using MySeries.Api.EF;
-using MySeries.Api.Identity;
+using MySeries.Api.GlobalHandlers.Exceptions;
+using MySeries.Api.Identity.Managers;
 using MySeries.Api.Identity.Model;
 using MySeries.Api.Model;
 
 namespace MySeries.Api.Controllers
 {
-	[Authorize]
+	[Authorize(Roles="Admin")]
 	[RoutePrefix( "api/Accounts" )]
-	public class AccountsController : ApiController
+	public class AccountsController : BaseApiController
 	{
-		private readonly ApplicationUserManager _appUserManager = null;
-
-		private ApplicationUserManager UserManager => _appUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
 		private readonly UnitOfWork unitOfWork = new UnitOfWork();
 		
 
@@ -53,7 +50,7 @@ namespace MySeries.Api.Controllers
 
 			try
 			{
-				var addUserResult = await UserManager.CreateAsync(user, userModel.Password);
+				var addUserResult = await AppUserManager.CreateAsync(user, userModel.Password);
 
 				if (!addUserResult.Succeeded)
 				{
@@ -62,26 +59,26 @@ namespace MySeries.Api.Controllers
 
 				//var user = await unitOfWork.AccountRepository.FindByNameAsync( createUserModel.Email );
 
-				string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+				string code = await AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
 				var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new {userId = user.Id, code = code}));
 
-				await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+				await AppUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 				return Created(new Uri(Url.Link("GetUserById", new {id = user.Id})), user.ToDto());
 			}
 			catch(Exception ex )
 			{
-				await UserManager.DeleteAsync(user);
-				//TODO: throw new publicException could not create user
-				return InternalServerError();
+				await AppUserManager.DeleteAsync(user);
+
+				throw new BusinessLogicException($"Could not create user: {ex.Message}");
 			}
 		}
 
 		[Route( "User/{id:guid}", Name = "GetUserById" )]
 		public async Task<IHttpActionResult> GetUser( string Id )
 		{
-			var user = await UserManager.FindByIdAsync( Id );
+			var user = await AppUserManager.FindByIdAsync( Id );
 
 			if( user != null )
 			{
@@ -94,7 +91,7 @@ namespace MySeries.Api.Controllers
 		[Route( "User/{username}" )]
 		public async Task<IHttpActionResult> GetUserByName( string username )
 		{
-			var user = await UserManager.FindByNameAsync( username );
+			var user = await AppUserManager.FindByNameAsync( username );
 
 			if( user != null )
 			{
@@ -115,7 +112,7 @@ namespace MySeries.Api.Controllers
 				return BadRequest( ModelState );
 			}
 
-			IdentityResult result = await UserManager.ConfirmEmailAsync( userId, code );
+			IdentityResult result = await AppUserManager.ConfirmEmailAsync( userId, code );
 
 			if( result.Succeeded )
 			{
@@ -135,7 +132,7 @@ namespace MySeries.Api.Controllers
 				return BadRequest( ModelState );
 			}
 
-			IdentityResult result = await UserManager.ChangePasswordAsync( User.Identity.GetUserId(), model.OldPassword, model.NewPassword );
+			IdentityResult result = await AppUserManager.ChangePasswordAsync( User.Identity.GetUserId(), model.OldPassword, model.NewPassword );
 
 			if( !result.Succeeded )
 			{
@@ -145,33 +142,47 @@ namespace MySeries.Api.Controllers
 			return Ok();
 		}
 
-		private IHttpActionResult GetErrorResult( IdentityResult result )
-		{
-			if( result == null )
-			{
-				return InternalServerError();
-			}
+	    [Authorize( Roles = "Admin" )]
+	    [Route( "user/{id:guid}/roles" )]
+	    [HttpPut]
+	    public async Task<IHttpActionResult> AssignRolesToUser( [FromUri] string id, [FromBody] string[] rolesToAssign )
+	    {
 
-			if( !result.Succeeded )
-			{
-				if( result.Errors != null )
-				{
-					foreach( string error in result.Errors )
-					{
-						ModelState.AddModelError( "", error );
-					}
-				}
+	        var appUser = await AppUserManager.FindByIdAsync( id );
 
-				if( ModelState.IsValid )
-				{
-					// No ModelState errors are available to send, so just return an empty BadRequest.
-					return BadRequest();
-				}
+	        if( appUser == null )
+	        {
+	            return NotFound();
+	        }
 
-				return BadRequest( ModelState );
-			}
+	        var currentRoles = await AppUserManager.GetRolesAsync( appUser.Id );
 
-			return null;
-		}
-	}
+	        var rolesNotExists = rolesToAssign.Except( AppRoleManager.Roles.Select( x => x.Name ) ).ToArray();
+
+	        if( rolesNotExists.Any() )
+	        {
+
+	            ModelState.AddModelError( "", $"Roles '{string.Join(",", rolesNotExists)}' does not exixts in the system");
+	            return BadRequest( ModelState );
+	        }
+
+	        IdentityResult removeResult = await AppUserManager.RemoveFromRolesAsync( appUser.Id, currentRoles.ToArray() );
+
+	        if( !removeResult.Succeeded )
+	        {
+	            ModelState.AddModelError( "", "Failed to remove user roles" );
+	            return BadRequest( ModelState );
+	        }
+
+	        IdentityResult addResult = await AppUserManager.AddToRolesAsync( appUser.Id, rolesToAssign );
+
+	        if( !addResult.Succeeded )
+	        {
+	            ModelState.AddModelError( "", "Failed to add user roles" );
+	            return BadRequest( ModelState );
+	        }
+
+	        return Ok();
+	    }
+    }
 }

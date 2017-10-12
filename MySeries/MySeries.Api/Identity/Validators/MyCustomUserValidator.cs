@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using MySeries.Api.Identity.Managers;
 using MySeries.Api.Model;
 
 namespace MySeries.Api.Identity.Validators
@@ -20,7 +21,7 @@ namespace MySeries.Api.Identity.Validators
 
 			var emailDomain = user.Email.Split( '@' )[1];
 
-			if( !allowedEmailDomains.Contains( emailDomain.ToLower() ) )
+			if( !this.allowedEmailDomains.Contains( emailDomain.ToLower() ) )
 			{
 				var errors = result.Errors.ToList();
 

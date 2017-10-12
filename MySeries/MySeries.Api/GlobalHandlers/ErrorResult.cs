@@ -32,17 +32,15 @@ namespace MySeries.Api.GlobalHandlers
         private HttpResponseMessage Execute()
         {
             HttpResponseMessage response;
-#if DEBUG
-            response = this.request.CreateErrorResponse( HttpStatusCode.InternalServerError, this.exception.GetExceptionString() );
-#else
+
             if (this.exception is BusinessLogicException)
             {
                 var logicException = this.exception as BusinessLogicException;
-                response = this.request.CreateErrorResponse(logicException.StatusCode, logicException.Message);
+                response = this.request.CreateErrorResponse(logicException.StatusCode, logicException.GetExceptionString());
             }
             else if (this.exception is EntityNotFoundException)
             {
-                response = this.request.CreateErrorResponse(HttpStatusCode.NotFound, this.exception.Message);
+                response = this.request.CreateErrorResponse(HttpStatusCode.NotFound, this.exception.GetExceptionString());
             }
             else if (this.exception is DbEntityValidationException)
             {
@@ -50,15 +48,12 @@ namespace MySeries.Api.GlobalHandlers
             }
             else if (this.exception is SqlException)
             {
-                response = this.request.CreateErrorResponse(HttpStatusCode.BadRequest, $"Database error occured");
+                response = this.request.CreateErrorResponse(HttpStatusCode.BadRequest, "Database error occured");
             }
             else
             {
                 response = this.request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unknown error occured");
-                response = this.request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unknown error occured");
             }
-#endif
-
             return response;
         }
     }

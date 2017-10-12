@@ -11,26 +11,27 @@ using Newtonsoft.Json.Serialization;
 
 namespace MySeries.Api
 {
-	public static class WebApiConfig
-	{
-		public static void Register( HttpConfiguration config )
-		{
-			config.MapHttpAttributeRoutes();
+    public static class WebApiConfig
+    {
+        public static void Register( HttpConfiguration config )
+        {
+            config.Services.Replace( typeof( IExceptionHandler ), new ApplicationExceptionHandler() );
+            config.Services.Add( typeof( IExceptionLogger ), new SurveyAdminExceptionLogger() );
+            config.MessageHandlers.Add( new RequestLogger() );
 
-			config.Routes.MapHttpRoute(
-				name: "DefaultApi",
-				routeTemplate: "api/{controller}/{id}",
-				defaults: new { id = RouteParameter.Optional }
-			);
-			
-			var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-			jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //TODO
+            //GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.S‌​erializerSettings.Re‌​ferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.S‌​erializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            GlobalConfiguration.Configuration.Filters.Add( new ValidationActionFilter() );
 
-			GlobalConfiguration.Configuration.Formatters.JsonFormatter.S‌​erializerSettings.Re‌​ferenceLoopHandling = ReferenceLoopHandling.Ignore;
-			GlobalConfiguration.Configuration.Filters.Add( new ValidationActionFilter() );
-			config.Services.Replace( typeof( IExceptionHandler ), new ApplicationExceptionHandler() );
-			//config.Services.Add( typeof( IExceptionLogger ), new SurveyAdminExceptionLogger() );
-			config.MessageHandlers.Add( new RequestLogger() );
-		}
-	}
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
+    }
 }

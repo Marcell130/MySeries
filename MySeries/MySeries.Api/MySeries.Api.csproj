@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,11 +89,14 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid, Version=9.5.2.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\Sendgrid.9.7.0\lib\net452\SendGrid.dll</HintPath>
@@ -215,13 +219,22 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Cognitive\Luis\LuisResponse.cs" />
+    <Compile Include="Cognitive\Luis\LuisResponseDto.cs" />
+    <Compile Include="Cognitive\Luis\UserIntent.cs" />
+    <Compile Include="Cognitive\Luis\UserQueryResult.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CognitiveController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\EpisodesController.cs" />
     <Compile Include="Controllers\SeasonsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TvShowsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Dto\EpisodeDto.cs" />
+    <Compile Include="Dto\RoleDto.cs" />
     <Compile Include="Dto\SeasonDto.cs" />
     <Compile Include="Dto\TvShowDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
@@ -236,36 +249,33 @@
     <Compile Include="GlobalHandlers\Logging\TraceExtension.cs" />
     <Compile Include="GlobalHandlers\ApplicationExceptionHandler.cs" />
     <Compile Include="GlobalHandlers\ValidationActionFilter.cs" />
-    <Compile Include="Identity\ApplicationUserManger.cs" />
+    <Compile Include="Identity\Managers\ApplicationRoleManager.cs" />
+    <Compile Include="Identity\Managers\ApplicationUserManger.cs" />
     <Compile Include="Identity\Model\ChangePasswordBindingModel.cs" />
+    <Compile Include="Identity\Model\CreateRoleBindingModel.cs" />
     <Compile Include="Identity\Model\CreateUserBindingModel.cs" />
-    <Compile Include="Identity\Model\ModelFactory.cs" />
     <Compile Include="Identity\Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Identity\Validators\MyCustomPasswordValidator.cs" />
     <Compile Include="Identity\Validators\MyCustomUserValidator.cs" />
-    <Compile Include="Migrations\201708151728053_InitialCreate.cs" />
-    <Compile Include="Migrations\201708151728053_InitialCreate.Designer.cs">
-      <DependentUpon>201708151728053_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708151741306_EpisodePosterUri.cs" />
-    <Compile Include="Migrations\201708151741306_EpisodePosterUri.Designer.cs">
-      <DependentUpon>201708151741306_EpisodePosterUri.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708152042460_ForeignIds.cs" />
-    <Compile Include="Migrations\201708152042460_ForeignIds.Designer.cs">
-      <DependentUpon>201708152042460_ForeignIds.cs</DependentUpon>
+    <Compile Include="Migrations\201710021625406_init.cs" />
+    <Compile Include="Migrations\201710021625406_init.Designer.cs">
+      <DependentUpon>201710021625406_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Episode.cs" />
+    <Compile Include="Model\Genre.cs" />
     <Compile Include="Model\Season.cs" />
     <Compile Include="Model\TvShow.cs" />
     <Compile Include="Model\TvShowState.cs" />
-    <Compile Include="Model\User.cs" />
-    <Compile Include="Model\UserSeries.cs" />
+    <Compile Include="Model\ApplicationUser.cs" />
+    <Compile Include="Model\UserTvShow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
+    <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Repositories\EpisodeRepository.cs" />
-    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\SeasonRepository.cs" />
+    <Compile Include="Repositories\TvShowRepository.cs" />
+    <Compile Include="Services\CognitiveService.cs" />
     <Compile Include="Services\EmailService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -347,14 +357,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708151728053_InitialCreate.resx">
-      <DependentUpon>201708151728053_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708151741306_EpisodePosterUri.resx">
-      <DependentUpon>201708151741306_EpisodePosterUri.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708152042460_ForeignIds.resx">
-      <DependentUpon>201708152042460_ForeignIds.cs</DependentUpon>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710021625406_init.resx">
+      <DependentUpon>201710021625406_init.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

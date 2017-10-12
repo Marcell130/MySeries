@@ -13,6 +13,7 @@ namespace MySeries.Api.EF
 
 		public MySeriesDbContext( string connectionString ) : base( connectionString, false )
 		{
+		    Database.CommandTimeout = 600;
 			Configuration.LazyLoadingEnabled = false;
 			Configuration.ProxyCreationEnabled = false;
 		}
@@ -21,8 +22,9 @@ namespace MySeries.Api.EF
 		public DbSet<Season> Seasons { get; set; }
 		public DbSet<TvShow> TvShows { get; set; }
 		public DbSet<UserTvShow> UserTvShows { get; set; }
+		public DbSet<Genre> Genres { get; set; }
 
-		protected override void OnModelCreating( DbModelBuilder modelBuilder )
+        protected override void OnModelCreating( DbModelBuilder modelBuilder )
 		{
 			base.OnModelCreating( modelBuilder );
 

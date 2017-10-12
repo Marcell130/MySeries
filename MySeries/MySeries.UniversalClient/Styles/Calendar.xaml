@@ -1,0 +1,46 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Style x:Key="dayItemStyle" TargetType="CalendarViewDayItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CalendarViewDayItem">
+                    <Grid x:Name="DayItemEventListRoot">
+                        <ListView ItemsSource="{TemplateBinding DataContext}" Padding="20,0,0,0" x:Name="EventInfoList" 
+                                  IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel x:Name="EventInfoPanel" Orientation="Horizontal">
+                                        <TextBlock x:Name="EventTime" Text="{Binding Title}"
+                                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource Self}}" >
+                                        </TextBlock>
+                                        <!--<TextBlock x:Name="EventDesc" Text="{Binding Name}" Padding="5,0,0,0" Foreground="Black" >-->
+
+                                        <!--</TextBlock>-->
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="Normal" />
+                                                <VisualState x:Name="Today" >
+                                                    <VisualState.Setters>
+                                                        <Setter Target="EventTime.Foreground" Value="White" />
+                                                        <Setter Target="EventDesc.Foreground" Value="White" />
+                                                        <Setter Target="EventTime.Text" Value="DASFASDDF" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+</ResourceDictionary>

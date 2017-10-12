@@ -36,10 +36,6 @@ namespace MySeries.UniversalClient.Model
 
         public DateTime AddedDate { get; set; }
 
-        public List<Season> Seasons { get; set; }
-
-
-
         public Uri PosterUriMedium => ThumbnailService.GetThumbnailUri( this.posterUriPostfix, ThumbnailSize.Medium );
 
         public string FirstAirYear => this.firstAirDate?.Year.ToString() ?? "";

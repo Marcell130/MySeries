@@ -128,8 +128,8 @@ namespace MySeries.UniversalClient.ViewModels
 
             //_primaryItems.Add( new ShellNavigationItem( "Shell_Main".GetLocalized(), Symbol.Document, typeof( MainViewModel ).FullName ) );
             _primaryItems.Add( new ShellNavigationItem( "Shell_MySeries".GetLocalized(), Symbol.Document, typeof( MySeriesViewModel ).FullName ) );
-            //_primaryItems.Add(new ShellNavigationItem("Shell_MasterDetail".GetLocalized(), Symbol.Document, typeof(MasterDetailViewModel).FullName));
-            //_primaryItems.Add(new ShellNavigationItem("Shell_Tabbed".GetLocalized(), Symbol.Document, typeof(TabbedViewModel).FullName));
+            _primaryItems.Add( new ShellNavigationItem( "Shell_Tabbed".GetLocalized(), Symbol.Document, typeof( SeriesListViewModel ).FullName ) );
+            _primaryItems.Add( new ShellNavigationItem( "Shell_MasterDetail".GetLocalized(), Symbol.Document, typeof( CalendarViewModel ).FullName ) );
             _secondaryItems.Add( new ShellNavigationItem( "Shell_Settings".GetLocalized(), Symbol.Setting, typeof( SettingsViewModel ).FullName ) );
         }
 

@@ -13,3 +13,14 @@
 *.xcf
 /MySeries/MySeries.UniversalClient/bin/x86/Debug
 /MySeries/MySeries.UniversalClient/obj
+/MySeries/MySeries.DbCopyService/App.config
+/MySeries/MySeries.Client.Android/bin/Debug
+/MySeries/MySeries.Client.Android/obj
+/MySeries/MySeries.Client.Core/bin/Debug
+/MySeries/MySeries.Client.Core/obj
+/MySeries/MySeries.DbCopyService/bin
+/MySeries/MySeries.DbCopyService/obj
+/MySeries/MySeries.DbCopyService/Properties/PublishProfiles
+/MySeries/MySeries.DbUpdateService/bin
+/MySeries/MySeries.DbUpdateService/obj
+/MySeries/MySeries.DbUpdateService/App.config

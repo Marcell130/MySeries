@@ -2,7 +2,6 @@
     x:Class="MySeries.UniversalClient.Views.SeriesDetailPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MySeries.UniversalClient.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -16,19 +15,29 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="350*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" FontSize="30" DataContext="{Binding TvShow}" Text="{Binding Title}" Margin="0,0,0,13" Grid.RowSpan="2"/>
-        <TextBlock Grid.Row="3" Foreground="Gray" FontSize="20" DataContext="{Binding TvShow}" Text="{Binding FirstAirYear}" Margin="0,0,0,12"/>
+        <StackPanel Grid.Row="1"  Margin="0,0,0,13" Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center"  FontSize="30" DataContext="{Binding TvShow}" Text="{Binding Title}"/>
+            <Button Margin="20, 0, 0, 0" MinWidth="48" MinHeight="48" 
+                    Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+                    Background="Green" Padding="0" FontSize="30" 
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Top" 
+                    FontWeight="ExtraBold" 
+                    
+                    Content="{Binding IsAddedLabel}" 
+                    Command="{Binding AddRemoveCommand}"/>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Foreground="Gray" FontSize="20" DataContext="{Binding TvShow}" Text="{Binding FirstAirYear}" Margin="0,0,0,12"/>
 
-        <TextBlock Grid.Row="4" FontSize="20" TextWrapping="WrapWholeWords" DataContext="{Binding TvShow}" Text="{Binding Overview}" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="3" FontSize="20" TextWrapping="WrapWholeWords" DataContext="{Binding TvShow}" Text="{Binding Overview}" />
 
 
-        <GridView Grid.Row="5"
+        <GridView Grid.Row="4"
                   Padding="18" Margin="0,140,0,0"
-                  SelectionMode="None"  ItemsSource="{Binding Path=TvShow.Seasons}" 
+                  SelectionMode="None"  ItemsSource="{Binding Seasons}" 
                   IsItemClickEnabled="True">
             <i:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="ItemClick">
@@ -52,7 +61,7 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        
+
         <!--  Adaptive triggers  -->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="WindowStates">

@@ -50,7 +50,7 @@ namespace MySeries.UniversalClient.ViewModels
 
         private async void Login()
         {
-            var token = await MySeriesDataService.LoginAsync( Username, Password );
+            var token = await MySeriesDataService.GetTokenAsync( Username, Password );
             await ApplicationData.Current.LocalSettings.SaveAsync<Token>( "MySeriesApiToken", token );
             var userInfo = await MySeriesDataService.GetUserInfoAsync( token );
 

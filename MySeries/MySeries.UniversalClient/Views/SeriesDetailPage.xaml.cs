@@ -29,10 +29,10 @@ namespace MySeries.UniversalClient.Views
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo( NavigationEventArgs e )
+        protected override async void OnNavigatedTo( NavigationEventArgs e )
         {
             var tvShow = e.Parameter as TvShow;
-            ViewModel.Initialize( tvShow );
+            await ViewModel.Initialize( tvShow );
         }
     }
 }

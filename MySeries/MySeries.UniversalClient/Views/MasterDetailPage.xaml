@@ -110,7 +110,7 @@
             <VisualStateGroup x:Name="WindowStates">
                 <i:Interaction.Behaviors>
                     <ic:EventTriggerBehavior EventName="CurrentStateChanged">
-                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.StateChangedCommand}"/>
+                        <!--<ic:InvokeCommandAction Command="{x:Bind ViewModel.StateChangedCommand}"/>-->
                     </ic:EventTriggerBehavior>
                 </i:Interaction.Behaviors>
                 <VisualState x:Name="WideState">
